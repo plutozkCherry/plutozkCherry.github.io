@@ -1,0 +1,451 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"><title>JavaScript高级程序学习-DOM遍历 | cherry_kai</title><meta name="author" content="cherry_kai"><meta name="copyright" content="cherry_kai"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="JavaScript高级程序学习-DOM遍历以及范围">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript高级程序学习-DOM遍历">
+<meta property="og:url" content="http://example.com/2023/04/13/DOM%E9%81%8D%E5%8E%86%E4%BB%A5%E5%8F%8A%E8%8C%83%E5%9B%B4/index.html">
+<meta property="og:site_name" content="cherry_kai">
+<meta property="og:description" content="JavaScript高级程序学习-DOM遍历以及范围">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/03/21/ywS8D1cAGioFHJe.png">
+<meta property="article:published_time" content="2023-04-13T02:14:00.000Z">
+<meta property="article:modified_time" content="2023-04-13T02:14:50.881Z">
+<meta property="article:author" content="cherry_kai">
+<meta property="article:tag" content="javascript-DOM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/03/21/ywS8D1cAGioFHJe.png"><link rel="shortcut icon" href="https://s2.loli.net/2023/03/21/HliDgkeWb76tSqj.png"><link rel="canonical" href="http://example.com/2023/04/13/DOM%E9%81%8D%E5%8E%86%E4%BB%A5%E5%8F%8A%E8%8C%83%E5%9B%B4/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//fonts.googleapis.com" crossorigin=""/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Titillium+Web&amp;display=swap" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'mediumZoom',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'JavaScript高级程序学习-DOM遍历',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-04-13 10:14:50'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="loading-box"><div class="loading-left-bg"></div><div class="loading-right-bg"></div><div class="spinner-box"><div class="configure-border-1"><div class="configure-core"></div></div><div class="configure-border-2"><div class="configure-core"></div></div><div class="loading-word">加载中...</div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.body.style.overflow = 'auto';
+    document.getElementById('loading-box').classList.add("loaded")
+  },
+  initLoading: () => {
+    document.body.style.overflow = '';
+    document.getElementById('loading-box').classList.remove("loaded")
+
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/./img/avatar_img.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/musics/"><i class="fa-fw fas fa-music"></i><span> 音乐分享</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 视频分享</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/03/21/ywS8D1cAGioFHJe.png')"><nav id="nav"><span id="blog-info"><a href="/" title="cherry_kai"><span class="site-name">cherry_kai</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> Archives</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 娱乐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/musics/"><i class="fa-fw fas fa-music"></i><span> 音乐分享</span></a></li><li><a class="site-page child" href="/movies/"><i class="fa-fw fas fa-video"></i><span> 视频分享</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">JavaScript高级程序学习-DOM遍历</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-04-13T02:14:00.000Z" title="发表于 2023-04-13 10:14:00">2023-04-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-04-13T02:14:50.881Z" title="更新于 2023-04-13 10:14:50">2023-04-13</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/JavaSctipt/">JavaSctipt</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="JavaScript高级程序学习-DOM遍历"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>[toc]</p>
+<h1 id="DOM2-DOM3"><a href="#DOM2-DOM3" class="headerlink" title="DOM2 DOM3"></a>DOM2 DOM3</h1><ul>
+<li>DOM2和DOM3是按照模块化的思路来制定标准的，每个模块之间有一定关联，但分别针对某个DOM子集。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>DOM Core</strong></td>
+<td>在DOM1核心部分的基础上，为节点增加方法和属性。</td>
+</tr>
+<tr>
+<td><strong>DOM Views</strong></td>
+<td>定义基于样式信息的不同视图。</td>
+</tr>
+<tr>
+<td><strong>DOM Events</strong></td>
+<td>定义通过事件实现DOM文档交互。</td>
+</tr>
+<tr>
+<td><strong>DOM Style</strong></td>
+<td>定义以编程方式访问和修改CSS样式的接口。</td>
+</tr>
+<tr>
+<td><strong>DOM Traversal and Range</strong></td>
+<td>新增遍历DOM文档及选择文档内容的接口。</td>
+</tr>
+<tr>
+<td>*<strong>DOM HTML</strong></td>
+<td>在DOM1 HTML部分的基础上，增加属性、方法和新接口。</td>
+</tr>
+<tr>
+<td><strong>DOM Mutation Observers</strong></td>
+<td>定义基于DOM变化触发回调的接口。这个模块是DOM4级模块，用于取代Mutation Events。</td>
+</tr>
+</tbody></table>
+<h4 id="1-遍历"><a href="#1-遍历" class="headerlink" title="1.遍历"></a>1.遍历</h4><ol>
+<li><p><strong>NodeIterator</strong></p>
+<ul>
+<li>通过document.createNodeIterator()方法创建其实例</li>
+<li>args[root,whatToShow,filter,entityReferenceExpansion]</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>类型</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>root</td>
+<td></td>
+<td>作为遍历根节点的节点</td>
+</tr>
+<tr>
+<td>whatToShow</td>
+<td></td>
+<td>数值代码，表示应该访问哪些节点</td>
+</tr>
+<tr>
+<td>filter，NodeFilter对象或函数</td>
+<td></td>
+<td>表示是否 接收 或 跳过 特定节点</td>
+</tr>
+<tr>
+<td>entityReferenceExpansion</td>
+<td>布尔值</td>
+<td>表示是否扩展实体引用。这个参数在HTML文档中没有效果，因为实体引用永远不扩展。</td>
+</tr>
+</tbody></table>
+<ul>
+<li><strong>whatToShow</strong>参数是一个位掩码，通过应用一个或多个过滤器来指定访问哪些节点。参数对应的常量是在NodeFilter类型中定义的。、</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>常量</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>NodeFilter.SHOW_ALL</td>
+<td>所有节点。</td>
+</tr>
+<tr>
+<td>NodeFilter.SHOW_ELEMENT</td>
+<td>元素节点。</td>
+</tr>
+<tr>
+<td>NodeFilter.SHOW_TEXT</td>
+<td>文本节点。</td>
+</tr>
+<tr>
+<td>NodeFilter.SHOW_COMMENT</td>
+<td>注释节点。</td>
+</tr>
+<tr>
+<td>NodeFilter.SHOW_DOCUMENT</td>
+<td>文档节点。</td>
+</tr>
+<tr>
+<td>NodeFilter.SHOW_DOCUMENT_TYPE</td>
+<td>文档类型节点。</td>
+</tr>
+<tr>
+<td><strong>NodeFilter.SHOW_ALL之外，都可以组合使用</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>只是常用的~</strong></td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// dom遍历  NodeIterator</span></span><br><span class="line"><span class="keyword">let</span> iterator = <span class="variable language_">document</span>.<span class="title function_">createNodeIterator</span>(<span class="variable language_">document</span>, <span class="title class_">NodeFilter</span>.<span class="property">SHOW_ALL</span>, <span class="literal">null</span>, <span class="literal">false</span>);</span><br><span class="line"><span class="keyword">let</span> node = iterator.<span class="title function_">nextNode</span>();</span><br><span class="line"><span class="keyword">while</span> (node !== <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(node.<span class="property">tagName</span>);     <span class="comment">// 输出标签名  </span></span><br><span class="line">    node = iterator.<span class="title function_">nextNode</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
+<tr>
+<td><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;div1&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">b</span>&gt;</span>Hello<span class="tag">&lt;/<span class="name">b</span>&gt;</span> world!<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>List item 1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>List item 2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>List item 3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 写个过滤，只迭代 &lt;li&gt; 标签</span></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">let</span> filterLi = <span class="keyword">function</span> (<span class="params">node</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">return</span> node.<span class="property">tagName</span>.<span class="title function_">toLowerCase</span>() == <span class="string">&#x27;li&#x27;</span> ? <span class="title class_">NodeFilter</span>.<span class="property">FILTER_ACCEPT</span> : <span class="title class_">NodeFilter</span>.<span class="property">FILTER_SKIP</span>;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">let</span> iterator1 = <span class="variable language_">document</span>.<span class="title function_">createNodeIterator</span>(<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;div1&#x27;</span>), <span class="title class_">NodeFilter</span>.<span class="property">SHOW_ELEMENT</span>, filterLi, <span class="literal">false</span>);</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">let</span> node = iterator1.<span class="title function_">nextNode</span>();</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">while</span> (node !== <span class="literal">null</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(node.<span class="property">tagName</span>);     <span class="comment">// 输出标签名</span></span></span><br><span class="line"><span class="language-javascript">        node = iterator1.<span class="title function_">nextNode</span>();</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">    <span class="comment">//li * 3</span></span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></td>
+<td></td>
+</tr>
+</tbody></table>
+</li>
+<li><p><strong>TreeWalker</strong> </p>
+<ul>
+<li>TreeWalker是NodeIterator的高级版。除了包含同样的nextNode()、previousNode()方法，TreeWalker还添加了如下在DOM结构中向不同方向遍历的方法。</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>parentNode()</td>
+<td>遍历到当前节点的父节点。</td>
+</tr>
+<tr>
+<td>firstChild()</td>
+<td>遍历到当前节点的第一个子节点。</td>
+</tr>
+<tr>
+<td>lastChild()</td>
+<td>遍历到当前节点的最后一个子节点。</td>
+</tr>
+<tr>
+<td>nextSibling()</td>
+<td>遍历到当前节点的下一个同胞节点。</td>
+</tr>
+<tr>
+<td>previousSibling()</td>
+<td>遍历到当前节点的上一个同胞节点。</td>
+</tr>
+</tbody></table>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>currentNode</td>
+<td>表示遍历过程中上一次返回的节点（无论使用的是哪个遍历方法）。</td>
+</tr>
+</tbody></table>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> node = walker.<span class="title function_">nextNode</span>();  </span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(node === walker.<span class="property">currentNode</span>);  <span class="comment">// true  </span></span><br><span class="line">walker.<span class="property">currentNode</span> = <span class="variable language_">document</span>.<span class="property">body</span>;        <span class="comment">// 修改起点</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>参数同 **document.createNodeIterator()**；</li>
+<li>不同的是：<ul>
+<li>节点过滤器（filter）除了可以返回NodeFilter.FILTER_ACCEPT和NodeFilter. FILTER_SKIP，还可以返回 <strong>NodeFilter.FILTER_REJECT</strong>。<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;div1&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">b</span>&gt;</span>Hello<span class="tag">&lt;/<span class="name">b</span>&gt;</span> world!<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>List item 1<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>List item 2<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">li</span>&gt;</span>List item 3<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">    <span class="comment">// 写个过滤，只迭代 &lt;li&gt; 标签</span></span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">let</span> filterLi = <span class="keyword">function</span> (<span class="params">node</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">return</span> node.<span class="property">tagName</span>.<span class="title function_">toLowerCase</span>() == <span class="string">&#x27;li&#x27;</span> ? <span class="title class_">NodeFilter</span>.<span class="property">FILTER_ACCEPT</span> : <span class="title class_">NodeFilter</span>.<span class="property">FILTER_SKIP</span>;</span></span><br><span class="line"><span class="language-javascript">    &#125;</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">let</span> walker = <span class="variable language_">document</span>.<span class="title function_">createTreeWalker</span>(<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;div1&#x27;</span>), <span class="title class_">NodeFilter</span>.<span class="property">SHOW_ELEMENT</span>, filterLi, <span class="literal">false</span>);</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">let</span> node = walker.<span class="title function_">nextNode</span>();</span></span><br><span class="line"><span class="language-javascript">    <span class="keyword">while</span> (node !== <span class="literal">null</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">        <span class="variable language_">console</span>.<span class="title function_">log</span>(node.<span class="property">tagName</span>);    <span class="comment">// 输出标签名  </span></span></span><br><span class="line"><span class="language-javascript">        node = walker.<span class="title function_">nextNode</span>();</span></span><br><span class="line"><span class="language-javascript">    &#125;  </span></span><br><span class="line"><span class="language-javascript">    <span class="comment">//li * 3</span></span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>TreeWalker <strong>真正的威力是可以在DOM结构中四处游走</strong>。<ul>
+<li>如果不使用过滤器，单纯使用TreeWalker的漫游能力同样可以在DOM树中访问&lt;li&gt;元素</li>
+<li><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//因为我们知道&lt;li&gt;元素在文档结构中的位置，所以可以直接定位过去。</span></span><br><span class="line"><span class="keyword">let</span> div = <span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&quot;div1&quot;</span>);</span><br><span class="line"><span class="keyword">let</span> walker = <span class="variable language_">document</span>.<span class="title function_">createTreeWalker</span>(div, <span class="title class_">NodeFilter</span>.<span class="property">SHOW_ELEMENT</span>, <span class="literal">null</span>, <span class="literal">false</span>);</span><br><span class="line">walker.<span class="title function_">firstChild</span>();   <span class="comment">// 前往&lt;p&gt; </span></span><br><span class="line">walker.<span class="title function_">nextSibling</span>();  <span class="comment">// 前往&lt;ul&gt; </span></span><br><span class="line"><span class="keyword">let</span> node = walker.<span class="title function_">firstChild</span>();  <span class="comment">// 前往第一个&lt;li&gt; </span></span><br><span class="line"><span class="keyword">while</span> (node !== <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(node.<span class="property">tagName</span>);</span><br><span class="line">    node = walker.<span class="title function_">nextSibling</span>();</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>关于节点过滤器（filter）,返回值。</p>
+<ol>
+<li><strong>NodeFilter.FILTER_ACCEPT</strong></li>
+<li><strong>NodeFilter.FILTER_SKIP</strong></li>
+<li><strong>NodeFilter.FILTER_REJECT</strong></li>
+</ol>
+<ul>
+<li>在使用NodeIterator时，NodeFilter.FILTER_SKIP和NodeFilter.FILTER_REJECT是一样的。</li>
+<li><strong>但在使用 TreeWalker 时，NodeFilter.FILTER_SKIP 表示跳过节点，访问子树中的下一个节点，而NodeFilter.FILTER_REJECT则表示跳过该节点以及该节点的整个子树。</strong></li>
+</ul>
+</li>
+</ol>
+<h4 id="2-范围-range"><a href="#2-范围-range" class="headerlink" title="2.范围 range"></a>2.范围 range</h4><ul>
+<li>DOM范围<ul>
+<li>DOM2在Document类型上定义了一个createRange()方法，暴露在document对象上。</li>
+</ul>
+</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="http://example.com">cherry_kai</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="http://example.com/2023/04/13/DOM%E9%81%8D%E5%8E%86%E4%BB%A5%E5%8F%8A%E8%8C%83%E5%9B%B4/">http://example.com/2023/04/13/DOM%E9%81%8D%E5%8E%86%E4%BB%A5%E5%8F%8A%E8%8C%83%E5%9B%B4/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">cherry_kai</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/javascript-DOM/">javascript-DOM</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2023/03/21/ywS8D1cAGioFHJe.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2023/03/28/everydayQuestion/daysQ3_28/" title="每日问题，你解决了吗?"><img class="cover" src="https://s2.loli.net/2023/03/21/olPtFxyjLMJaskN.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">每日问题，你解决了吗?</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/./img/avatar_img.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">cherry_kai</div><div class="author-info__description">cherry_kai的blog，欢迎访问！</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">6</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/plutozkCherry"><i class="fab fa-github"></i><span>Follow Me</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/plutozkCherry" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://email.163.com" target="_blank" title="Email"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来到我的博客。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#DOM2-DOM3"><span class="toc-number">1.</span> <span class="toc-text">DOM2 DOM3</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E9%81%8D%E5%8E%86"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">1.遍历</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%8C%83%E5%9B%B4-range"><span class="toc-number">1.0.0.2.</span> <span class="toc-text">2.范围 range</span></a></li></ol></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2023/04/13/DOM%E9%81%8D%E5%8E%86%E4%BB%A5%E5%8F%8A%E8%8C%83%E5%9B%B4/" title="JavaScript高级程序学习-DOM遍历"><img src="https://s2.loli.net/2023/03/21/ywS8D1cAGioFHJe.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript高级程序学习-DOM遍历"/></a><div class="content"><a class="title" href="/2023/04/13/DOM%E9%81%8D%E5%8E%86%E4%BB%A5%E5%8F%8A%E8%8C%83%E5%9B%B4/" title="JavaScript高级程序学习-DOM遍历">JavaScript高级程序学习-DOM遍历</a><time datetime="2023-04-13T02:14:00.000Z" title="发表于 2023-04-13 10:14:00">2023-04-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/28/everydayQuestion/daysQ3_28/" title="每日问题，你解决了吗?"><img src="https://s2.loli.net/2023/03/21/olPtFxyjLMJaskN.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="每日问题，你解决了吗?"/></a><div class="content"><a class="title" href="/2023/03/28/everydayQuestion/daysQ3_28/" title="每日问题，你解决了吗?">每日问题，你解决了吗?</a><time datetime="2023-03-28T09:44:00.000Z" title="发表于 2023-03-28 17:44:00">2023-03-28</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/27/everydayQuestion/daysQ/" title="每日问题，你解决了吗?"><img src="https://s2.loli.net/2023/03/21/olPtFxyjLMJaskN.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="每日问题，你解决了吗?"/></a><div class="content"><a class="title" href="/2023/03/27/everydayQuestion/daysQ/" title="每日问题，你解决了吗?">每日问题，你解决了吗?</a><time datetime="2023-03-27T09:24:00.000Z" title="发表于 2023-03-27 17:24:00">2023-03-27</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/22/%E5%8F%98%E9%87%8F%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%86%85%E5%AD%98/" title="JavaScript高级程序学习-变量、作用域、内存"><img src="https://s2.loli.net/2023/03/21/ywS8D1cAGioFHJe.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript高级程序学习-变量、作用域、内存"/></a><div class="content"><a class="title" href="/2023/03/22/%E5%8F%98%E9%87%8F%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%86%85%E5%AD%98/" title="JavaScript高级程序学习-变量、作用域、内存">JavaScript高级程序学习-变量、作用域、内存</a><time datetime="2023-03-22T07:19:00.000Z" title="发表于 2023-03-22 15:19:00">2023-03-22</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/03/20/%E9%9B%86%E5%90%88%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B/" title="JavaScript高级程序学习-集合引用类型"><img src="https://s2.loli.net/2023/03/21/ywS8D1cAGioFHJe.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaScript高级程序学习-集合引用类型"/></a><div class="content"><a class="title" href="/2023/03/20/%E9%9B%86%E5%90%88%E5%BC%95%E7%94%A8%E7%B1%BB%E5%9E%8B/" title="JavaScript高级程序学习-集合引用类型">JavaScript高级程序学习-集合引用类型</a><time datetime="2023-03-20T11:28:00.000Z" title="发表于 2023-03-20 19:28:00">2023-03-20</time></div></div></div></div></div></div></main><footer id="footer" style="background: true - linear-gradient(135deg,#0C7BB3 10%,#F2BAE8 100%)"><div id="footer-wrap"><div class="copyright">&copy;2022 - 2023 By cherry_kai</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">你好，欢迎访问我的 <a target="_blank" rel="noopener" href="https://plutozkcherry.github.io/">博客</a>!</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">简</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.jsdelivr.net/npm/medium-zoom/dist/medium-zoom.min.js"></script><script src="https://cdn.jsdelivr.net/npm/instant.page/instantpage.min.js" type="module"></script><div class="js-pjax"></div><div class="aplayer no-destroy" data-id="60198" data-server="netease" data-volume="0.3" data-type="playlist" data-fixed="true" data-autoplay="true" data-theme="#ad7a86"> </div><script id="click-show-text" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-show-text.min.js" data-mobile="false" data-text="I,LOVE,YOU" data-fontsize="13px" data-random="true" async="async"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"]):not([href="/music/"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
